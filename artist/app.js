@@ -1,9 +1,11 @@
+"use strict";
+
 var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
-var app = express();
+const app = express();
 
 app.use(logger('dev'));
 app.use(express.json());
@@ -15,8 +17,10 @@ const userRouter = require("./routes/userRoutes").userRouter;
 const boardRouter = require("./routes/boardRoutes").boardRouter;
 const friendRouter = require("./routes/friendRoutes").friendRouter;
 
-app.use('/users', userRouter);
+app.use("/users", userRouter);
 app.use('/boards', boardRouter);
 app.use('/friends', friendRouter);
+
+app.listen(4848, () => console.log("Startup Complete"));
 
 module.exports = app;
