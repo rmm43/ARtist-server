@@ -20,7 +20,7 @@ const Board = db.define("Cloudboard",
 			type: Sequelize.TINYINT
 		},
 		user_id: {
-			type: Sequelize.INTEGER(11)
+			type: Sequelize.STRING(100)
 		}
         },
         {

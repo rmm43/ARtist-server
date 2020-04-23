@@ -5,10 +5,11 @@ const express = require("express");
 const friendRouter = express.Router();
 friendRouter.use(express.json());
 const Sequelize = require("sequelize");
+const Op = Sequelize.Op;
 
 //Get Routes
 friendRouter.route("/:id").get(async (req,res) => {
-        res.json(await getAllUsers(req.params.id));
+        res.json(await getFriends(req.params.id));
 });
 
 

@@ -6,7 +6,7 @@ const db = require("../db");
 const Friend = db.define("Friend_Relationship",
         {
                 user_id: {
-                        type: Sequelize.INTEGER(11),
+                        type: Sequelize.STRING(100),
                         primaryKey: true,
                         autoIncrement: false
                 },
