@@ -13,7 +13,7 @@ const User = db.define("User",
 		username: {
 			type: Sequelize.STRING(100)
 		},
-		pass_hash: {
+		email: {
 			type: Sequelize.STRING(500)
 		}
 	},
