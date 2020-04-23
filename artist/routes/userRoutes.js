@@ -14,11 +14,19 @@ userRouter.route("/").get(async (req,res) => {
 
 //Post Routes
 userRouter.route("/create").post(async (req, res) => { 
-	User.create({
-		user_id: escape(req.body.user_id), username: escape(req.body.username), email: escape(req.body.email)
-	}).then(user => {
+	
+	if(await getUserById(req.body.user_id) == null)
+	{
+		User.create({
+			user_id: escape(req.body.user_id), username: escape(req.body.username), email: escape(req.body.email)
+		}).then(user => {
+			return res.status(200);
+		});
+	}
+	else
+	{
 		return res.status(200);
-	});
+	}
 });
 
 
@@ -26,6 +34,12 @@ userRouter.route("/create").post(async (req, res) => {
 async function getAllUsers() {
 	const users = await User.findAll();
 	return users;
+}
+
+async function getUserById(id)
+{
+	const user = await User.findAll({where: {user_id: {[Op.eq]: id}}});
+	return user;
 }
 
 module.exports = {userRouter};
