@@ -13,7 +13,13 @@ userRouter.route("/").get(async (req,res) => {
 
 
 //Post Routes
-
+userRouter.route("/create").post(async (req, res) => { 
+	User.create({
+		user_id: escape(req.body.user_id), username: escape(req.body.username), email: escape(req.body.email)
+	}).then(user => {
+		return res.status(200);
+	});
+});
 
 
 //Helper Functions
