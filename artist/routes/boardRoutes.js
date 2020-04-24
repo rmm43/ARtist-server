@@ -19,29 +19,37 @@ boardRouter.route("/byusername/:username").get(async (req,res) => {
 
 
 //Post Routes
+//boardRouter.route("/newBoard").post(async (req,res) => {
+//	
+//	Board.findOne({
+//		where: {username: {[Op.eq]: escape(req.body.username)}}
+//	}).then(board => {
+	//
+	//	if(board != null)
+	//	{
+	//		board.update({
+	//			board_hash: req.body.hash
+	//		}).then(updatedBoard => {
+	//			return res.status(200);
+	//		});
+	//	}
+	//	else
+	//	{
+	//		Board.create({
+      //          	board_id: null, board_hash: req.body.hash, geo_location: null, is_public: null, username: escape(req.body.username)
+    //    		}).then(newBoard => {
+  //             			 return res.status(200);
+//			});
+//		}
+//	});
+//});
+
 boardRouter.route("/newBoard").post(async (req,res) => {
-	
-	Board.findOne({
-		where: {username: {[Op.eq]: escape(req.body.username)}}
-	}).then(board => {
-	
-		if(board != null)
-		{
-			board.update({
-				board_hash: req.body.hash
-			}).then(updatedBoard => {
-				return res.status(200);
-			});
-		}
-		else
-		{
-			Board.create({
-                	board_id: null, board_hash: req.body.hash, geo_location: null, is_public: null, username: escape(req.body.username)
-        		}).then(newBoard => {
-               			 return res.status(200);
-			});
-		}
-	});
+	Board.create({
+                        board_id: null, board_hash: req.body.hash, geo_location: null, is_public: null, username: escape(req.body.username)
+                        }).then(newBoard => {
+                                 return res.status(200).send();
+                        });
 });
 
 
@@ -51,9 +59,14 @@ async function getAllBoard() {
         return boards;
 }
 
+//async function getByUsername(username) {
+//	const board = await Board.findOne({where: {username: {[Op.eq]: username}}});
+//	return board;
+//}
+
 async function getByUsername(username) {
-	const board = await Board.findOne({where: {username: {[Op.eq]: username}}});
-	return board;
+	const boards = await Board.findAll({where: {username: {[Op.eq]: username}}});
+	return boards;
 }
 
 module.exports = {boardRouter};
