@@ -5,6 +5,8 @@ const express = require("express");
 const userRouter = express.Router();
 userRouter.use(express.json());
 const Sequelize = require("sequelize");
+const Op = Sequelize.Op;
+
 
 //Get Routes
 userRouter.route("/").get(async (req,res) => {
@@ -15,16 +17,21 @@ userRouter.route("/").get(async (req,res) => {
 //Post Routes
 userRouter.route("/create").post(async (req, res) => { 
 	
-	if(await getUserById(req.body.user_id) == null)
+	
+	var result = await getUserById(req.body.user_id);
+	if(result == null)
 	{
+		console.log("Adding " + req.body.username + " to database.");
+		
 		User.create({
 			user_id: escape(req.body.user_id), username: escape(req.body.username), email: escape(req.body.email)
 		}).then(user => {
-			return res.status(200);
+			return res.status(200).send(user);
 		});
 	}
 	else
 	{
+		console.log("Not adding to database.");
 		return res.status(200);
 	}
 });
@@ -38,8 +45,11 @@ async function getAllUsers() {
 
 async function getUserById(id)
 {
-	const user = await User.findAll({where: {user_id: {[Op.eq]: id}}});
-	return user;
+	User.findAll({
+			where: {user_id: {[Op.eq]: id}}
+		}).then(user => {
+			return user;
+		});
 }
 
 module.exports = {userRouter};

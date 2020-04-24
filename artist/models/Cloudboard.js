@@ -19,7 +19,7 @@ const Board = db.define("Cloudboard",
 		is_public: {
 			type: Sequelize.TINYINT
 		},
-		user_id: {
+		username: {
 			type: Sequelize.STRING(100)
 		}
         },
